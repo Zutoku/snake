@@ -32,12 +32,16 @@ def main(stdscr):
     # This enables key presses to go through without needing enter
     # curses.cbreak()
     # This hides the cursor
+    # Make getch() non-blocking
+    stdscr.nodelay(1)
 
     curses.curs_set(False)
     x = 1
     y = 1
+    start_time = time.time()
     # game loop starts here:
     while True:
+        time_elapsed = time.time() - start_time
         key = stdscr.getch()
         game_board.fill_board()
         # Why not use else if?
@@ -58,12 +62,16 @@ def main(stdscr):
             case curses.KEY_RIGHT:
                 stdscr.clear()
                 x += 2
-        stdscr.refresh()
         if 0 < x < game_board.width and 0 < y < game_board.height:
             game_board.board[y, x] = "~"
+        if time_elapsed > 2.0:
+            start_time = time.time()
+        stdscr.clear()
         game_board.print_board(stdscr)
-
-    # Reset terminal to normal state
+        stdscr.addstr(f"{time_elapsed}\n")
+        stdscr.refresh()
+        time.sleep(0.1)
+    # Small delay to reduce CPU usage# Reset terminal to normal state
     # NOT NEEDED AS HANDLED BY WRAPPER
     # curses.nocbreak(), stdscr.keypad(False)
     # curses.echo()

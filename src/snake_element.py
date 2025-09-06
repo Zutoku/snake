@@ -3,4 +3,4 @@ class SnakeElement:
         self.x = x
         self.y = y
         self.id = 0
-        self.SNAKE_SHAPE = "#"
+        self.SNAKE_SHAPE = "~"

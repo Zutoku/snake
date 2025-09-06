@@ -1,3 +1,4 @@
+import curses
 import numpy as np
 
 
@@ -14,10 +15,13 @@ class GameBoard:
         self.fill_board()
 
     def print_board(self, stdscr):
-        for i in range(self.height):
-            for j in range(self.width):
-                stdscr.addstr(f"{self.board[i][j]}")
-            stdscr.addstr("\n")
+        try:
+            for i in range(self.height):
+                for j in range(self.width):
+                    stdscr.addstr(f"{self.board[i][j]}")
+                stdscr.addstr("\n")
+        except curses.error:
+            pass
 
     def fill_board(self):
         self.board = np.full((self.height, self.width), " ", dtype=object)
