@@ -26,8 +26,7 @@ def main(stdscr):
 
     stdscr.clear()
     game_board = GameBoard(y, x)
-    snake = Snake(1, 1)
-    game_board.board[1, 1] = "#"
+    snake = Snake(1, 1, game_board.height, game_board.width)
     game_board.print_board(stdscr)
 
     # Prevent pressed keys from displaying in terminal
@@ -43,7 +42,9 @@ def main(stdscr):
     y = 1
     start_time = time.time()
     # game loop starts here:
-    while True:
+    running = True
+    hard_mode = False
+    while running:
         time_elapsed = time.time() - start_time
         key = stdscr.getch()
         game_board.fill_board()
@@ -52,7 +53,7 @@ def main(stdscr):
         # look at how it's interpreted in assembly
         match key:
             case 113:  # ASCII code for letter q
-                break
+                running = False
             case curses.KEY_UP:
                 snake.direction = Direction.UP
             case curses.KEY_DOWN:
@@ -65,6 +66,9 @@ def main(stdscr):
         if 0 < x < game_board.width and 0 < y < game_board.height:
             game_board.board[y, x] = "#"
         if time_elapsed > 1.0:
+            snake.update_direction()
+            if snake.is_out_of_bounds() and hard_mode:
+                running = False
             y, x = snake.update_position()
             start_time = time.time()
         stdscr.clear()
