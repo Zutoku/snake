@@ -1,6 +1,8 @@
 import time
 import curses
+from constants import Direction
 from game_board import GameBoard
+from snake import Snake
 
 
 def main(stdscr):
@@ -24,7 +26,8 @@ def main(stdscr):
 
     stdscr.clear()
     game_board = GameBoard(y, x)
-    game_board.board[1, 1] = "~"
+    snake = Snake(1, 1)
+    game_board.board[1, 1] = "#"
     game_board.print_board(stdscr)
 
     # Prevent pressed keys from displaying in terminal
@@ -51,31 +54,25 @@ def main(stdscr):
             case 113:  # ASCII code for letter q
                 break
             case curses.KEY_UP:
-                stdscr.clear()
-                y -= 2
+                snake.direction = Direction.UP
             case curses.KEY_DOWN:
-                stdscr.clear()
-                y += 2
+                snake.direction = Direction.DOWN
             case curses.KEY_LEFT:
-                stdscr.clear()
-                x -= 2
+                snake.direction = Direction.LEFT
             case curses.KEY_RIGHT:
-                stdscr.clear()
-                x += 2
+                snake.direction = Direction.RIGHT
+
         if 0 < x < game_board.width and 0 < y < game_board.height:
-            game_board.board[y, x] = "~"
-        if time_elapsed > 2.0:
+            game_board.board[y, x] = "#"
+        if time_elapsed > 1.0:
+            y, x = snake.update_position()
             start_time = time.time()
         stdscr.clear()
         game_board.print_board(stdscr)
         stdscr.addstr(f"{time_elapsed}\n")
         stdscr.refresh()
+        # Small delay to reduce CPU usage
         time.sleep(0.1)
-    # Small delay to reduce CPU usage# Reset terminal to normal state
-    # NOT NEEDED AS HANDLED BY WRAPPER
-    # curses.nocbreak(), stdscr.keypad(False)
-    # curses.echo()
-    # curses.endwin()
 
 
 if __name__ == "__main__":
