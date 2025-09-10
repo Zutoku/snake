@@ -64,16 +64,23 @@ def main(stdscr):
                 snake.direction = Direction.RIGHT
 
         if 0 < x < game_board.width and 0 < y < game_board.height:
-            game_board.board[y, x] = "#"
+            for position in snake.positions:
+                game_board.board[(position)] = snake.SNAKE_SHAPE
+
         if time_elapsed > 1.0:
             snake.update_direction()
+            snake.update_snake()
+
             if snake.is_out_of_bounds() and hard_mode:
                 running = False
-            y, x = snake.update_position()
+
+            # y, x = snake.update_position()
             start_time = time.time()
+
         stdscr.clear()
         game_board.print_board(stdscr)
         stdscr.addstr(f"{time_elapsed}\n")
+        stdscr.addstr(f"{snake.positions}\n")
         stdscr.refresh()
         # Small delay to reduce CPU usage
         time.sleep(0.1)

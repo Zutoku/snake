@@ -1,6 +1,5 @@
 class SnakeElement:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.id = 0
-        self.SNAKE_SHAPE = "~"
+    def __init__(self, y, x, id=0):
+        self.current_position = (y, x)
+        self.last_position = (y, x)
+        self.id = id
