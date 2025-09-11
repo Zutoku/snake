@@ -17,9 +17,11 @@ def main(stdscr):
 
             stdscr.addstr("Please select a game height: ")
             y = int(stdscr.getstr().decode("utf-8"))
+
         except ValueError:
             stdscr.addstr("Please only use integers\n")
             continue
+
         if 0 < x <= 21 and 0 < y <= 21:
             break
         stdscr.addstr("Please choose an integer between 0 and 21\n")
@@ -48,9 +50,7 @@ def main(stdscr):
         time_elapsed = time.time() - start_time
         key = stdscr.getch()
         game_board.fill_board()
-        # Why not use else if?
-        # Switch/match is faster,
-        # look at how it's interpreted in assembly
+
         match key:
             case 113:  # ASCII code for letter q
                 running = False

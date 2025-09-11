@@ -12,7 +12,7 @@ class Snake:
         self.y = y
         self.x = x
         self.direction = Direction.DOWN
-        self.snake_length = 5
+        self.snake_length = 5  # TODO: make dynamic, not hardcoded
         self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length + 1)]
         self.fill_positions()
 
@@ -30,7 +30,7 @@ class Snake:
     def fill_positions(self):
         self.positions[0] = (self.y, self.x)
         for i in range(1, self.snake_length + 1):
-            self.positions[i] = (1, self.x + i * 2)
+            self.positions[i] = (1, self.x + i * self.GRID_OFFSET)
 
     def update_position(self):
         self.y = max(1, min(self.y, self.board_height - self.GRID_OFFSET))
@@ -40,8 +40,8 @@ class Snake:
     def update_snake(self):
         self.y = max(1, min(self.y, self.board_height - self.GRID_OFFSET))
         self.x = max(1, min(self.x, self.board_width - self.GRID_OFFSET))
-        self.positions.insert(0, (self.y, self.x))
         self.positions.pop()
+        self.positions.insert(0, (self.y, self.x))
 
     def is_out_of_bounds(self):
         out_of_bounds = (
