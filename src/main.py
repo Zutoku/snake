@@ -28,7 +28,7 @@ def main(stdscr):
 
     stdscr.clear()
     game_board = GameBoard(y, x)
-    snake = Snake(1, 1, game_board.height, game_board.width)
+    snake = Snake(1, 1, game_board.game_height, game_board.game_width)
     game_board.print_board(stdscr)
 
     # Prevent pressed keys from displaying in terminal
@@ -64,8 +64,9 @@ def main(stdscr):
                 snake.direction = Direction.RIGHT
 
         if 0 < x < game_board.width and 0 < y < game_board.height:
-            for position in snake.positions:
-                game_board.board[(position)] = snake.SNAKE_SHAPE
+            for y, x in snake.positions:
+                game_board.set_value(y, x, snake.SNAKE_SHAPE)
+                # game_board.board[(position)] = snake.SNAKE_SHAPE
 
         if time_elapsed > 1.0:
             snake.update_direction()

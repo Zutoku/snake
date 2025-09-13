@@ -45,6 +45,11 @@ class GameBoard:
                 self.board[i][j] = self.CORNERS
 
     def set_value(self, y, x, value):
-        y = y + self.GRID_OFFSET
-        x = x + self.GRID_OFFSET
+        if x > 1:
+            x = (x * self.GRID_OFFSET) - 1
+        if y > 1:
+            y = (y * self.GRID_OFFSET) - 1
+
+        y = max(1, min(y, self.height - 1))
+        x = max(1, min(x, self.width - 1))
         self.board[y, x] = value

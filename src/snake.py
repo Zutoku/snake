@@ -5,7 +5,6 @@ from typing import List, Tuple
 
 class Snake:
     def __init__(self, y, x, board_height, board_width) -> None:
-        self.GRID_OFFSET = 2
         self.SNAKE_SHAPE = "#"
         self.board_height = board_height
         self.board_width = board_width
@@ -13,33 +12,33 @@ class Snake:
         self.x = x
         self.direction = Direction.DOWN
         self.snake_length = 5  # TODO: make dynamic, not hardcoded
-        self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length + 1)]
+        self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length)]
         self.fill_positions()
 
     def update_direction(self):
         match self.direction:
             case Direction.UP:
-                self.y -= self.GRID_OFFSET
+                self.y -= 1
             case Direction.DOWN:
-                self.y += self.GRID_OFFSET
+                self.y += 1
             case Direction.LEFT:
-                self.x -= self.GRID_OFFSET
+                self.x -= 1
             case Direction.RIGHT:
-                self.x += self.GRID_OFFSET
+                self.x += 1
 
     def fill_positions(self):
         self.positions[0] = (self.y, self.x)
-        for i in range(1, self.snake_length + 1):
-            self.positions[i] = (1, self.x + i * self.GRID_OFFSET)
+        for i in range(1, self.snake_length):
+            self.positions[i] = (1, i + 1)
 
     def update_position(self):
-        self.y = max(1, min(self.y, self.board_height - self.GRID_OFFSET))
-        self.x = max(1, min(self.x, self.board_width - self.GRID_OFFSET))
+        self.y = max(1, min(self.y, self.board_height))
+        self.x = max(1, min(self.x, self.board_width))
         return self.y, self.x
 
     def update_snake(self):
-        self.y = max(1, min(self.y, self.board_height - self.GRID_OFFSET))
-        self.x = max(1, min(self.x, self.board_width - self.GRID_OFFSET))
+        self.y = max(1, min(self.y, self.board_height))
+        self.x = max(1, min(self.x, self.board_width))
         self.positions.pop()
         self.positions.insert(0, (self.y, self.x))
 
