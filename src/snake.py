@@ -45,9 +45,9 @@ class Snake:
     def is_out_of_bounds(self):
         out_of_bounds = (
             self.x <= 0
-            or self.x >= self.board_width
+            or self.x >= self.board_width + 1
             or self.y <= 0
-            or self.y >= self.board_height
+            or self.y >= self.board_height + 1
         )
         return out_of_bounds
 

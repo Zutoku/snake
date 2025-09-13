@@ -1,10 +1,58 @@
 import curses
+import time
+from game_board import GameBoard
+from snake import Snake
+from constants import Direction
 
 
 class Game:
     def __init__(self):
         self.score: int = 0
-        self.FOOD_SHAPE = "•"
+
+    def run(self, stdscr, game_board: GameBoard, snake: Snake):
+        start_time = time.time()
+        running = True
+        hard_mode = True
+        while running:
+            time_elapsed = time.time() - start_time
+            key = stdscr.getch()
+            game_board.fill_board()
+
+            match key:
+                case 113:  # ASCII code for letter q
+                    running = False
+                case curses.KEY_UP:
+                    snake.direction = Direction.UP
+                case curses.KEY_DOWN:
+                    snake.direction = Direction.DOWN
+                case curses.KEY_LEFT:
+                    snake.direction = Direction.LEFT
+                case curses.KEY_RIGHT:
+                    snake.direction = Direction.RIGHT
+
+            for y, x in snake.positions:
+                game_board.set_value(y, x, snake.SNAKE_SHAPE)
+
+            if time_elapsed > 1.0:
+                snake.update_direction()
+
+                if hard_mode:
+                    if snake.is_out_of_bounds():
+                        running = False
+                    if len(snake.positions) != len(set(snake.positions)):
+                        running = False
+
+                snake.update_snake()
+                # y, x = snake.update_position()
+                start_time = time.time()
+
+            stdscr.clear()
+            game_board.print_board(stdscr)
+            stdscr.addstr(f"{time_elapsed}\n")
+            stdscr.addstr(f"{snake.positions}\n")
+            stdscr.refresh()
+            # Small delay to reduce CPU usage
+            time.sleep(0.1)
 
     def update(self):
         pass
