@@ -8,6 +8,7 @@ class Food:
         self.y = 1
         self.x = 1
         self.FOOD_SHAPE = "•"
+        self.EMPTY = " "
 
     def generate_food(self):
         self.y = random.random_integers(1, self.game_height)

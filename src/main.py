@@ -25,10 +25,14 @@ def main(stdscr):
 
         except ValueError:
             stdscr.addstr("Please only use integers\n")
+            stdscr.addstr("Press enter to try again: ")
+            stdscr.getstr()
             continue
 
         if not (0 < x <= 21 and 0 < y <= 21):
             stdscr.addstr("Please choose an integer between 0 and 21\n")
+            stdscr.addstr("Press enter to try again: ")
+            stdscr.getstr()
             continue
 
         stdscr.clear()

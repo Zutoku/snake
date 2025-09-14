@@ -33,14 +33,14 @@ class Game:
             for y, x in snake.positions:
                 game_board.set_value(y, x, snake.SNAKE_SHAPE)
 
+            if hard_mode:
+                if snake.is_out_of_bounds():
+                    running = False
+                if len(snake.positions) != len(set(snake.positions)):
+                    running = False
+
             if time_elapsed > 1.0:
                 snake.update_direction()
-
-                if hard_mode:
-                    if snake.is_out_of_bounds():
-                        running = False
-                    if len(snake.positions) != len(set(snake.positions)):
-                        running = False
 
                 snake.update_snake()
                 # y, x = snake.update_position()
