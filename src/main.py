@@ -1,6 +1,7 @@
 import curses
 from game_board import GameBoard
 from snake import Snake
+from food import Food
 from game_loop import Game
 
 
@@ -38,6 +39,7 @@ def main(stdscr):
         stdscr.clear()
         game_board = GameBoard(y, x)
         snake = Snake(1, 1, game_board.game_height, game_board.game_width)
+        food = Food(y, x)
         game_board.print_board(stdscr)
 
         # Prevent pressed keys from displaying in terminal
@@ -50,7 +52,7 @@ def main(stdscr):
 
         curses.curs_set(False)
         game = Game()
-        game.run(stdscr, game_board, snake)
+        game.run(stdscr, game_board, snake, food)
 
     # key = stdscr.getstr()
     # if key == ord("q"):

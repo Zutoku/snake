@@ -7,9 +7,17 @@ class Food:
         self.game_width = game_width
         self.y = 1
         self.x = 1
+        self.position = 0, 0
+        self.shape = ""
         self.FOOD_SHAPE = "•"
         self.EMPTY = " "
+        self.exists = False
 
     def generate_food(self):
-        self.y = random.random_integers(1, self.game_height)
-        self.x = random.random_integers(1, self.game_width)
+        self.y = random.randint(1, self.game_height)
+        self.x = random.randint(1, self.game_width)
+        self.position = self.y, self.x
+        self.exists = True
+
+    def eat_food(self):
+        self.exists = False

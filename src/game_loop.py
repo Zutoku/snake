@@ -2,6 +2,7 @@ import curses
 import time
 from game_board import GameBoard
 from snake import Snake
+from food import Food
 from constants import Direction
 
 
@@ -9,7 +10,7 @@ class Game:
     def __init__(self):
         self.score: int = 0
 
-    def run(self, stdscr, game_board: GameBoard, snake: Snake):
+    def run(self, stdscr, game_board: GameBoard, snake: Snake, food: Food):
         start_time = time.time()
         running = True
         hard_mode = True
@@ -41,15 +42,28 @@ class Game:
 
             if time_elapsed > 1.0:
                 snake.update_direction()
-
                 snake.update_snake()
                 # y, x = snake.update_position()
                 start_time = time.time()
+
+            if food.exists and food.position in snake.positions:
+                food.exists = False
+
+            generate_food_condition = (not food.exists) and (
+                food.position not in snake.positions
+            )
+            if generate_food_condition:
+                while food.position in snake.positions:
+                    food.generate_food()
+                game_board.set_value(food.y, food.x, food.FOOD_SHAPE)
 
             stdscr.clear()
             game_board.print_board(stdscr)
             stdscr.addstr(f"{time_elapsed}\n")
             stdscr.addstr(f"{snake.positions}\n")
+            stdscr.addstr(f"{food.position}\n")
+            stdscr.addstr(f"y: {food.y} x: {food.x}\n")
+            stdscr.addstr(f"{food.exists}\n")
             stdscr.refresh()
             # Small delay to reduce CPU usage
             time.sleep(0.1)
