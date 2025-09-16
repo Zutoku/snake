@@ -17,7 +17,16 @@ class GameBoard:
 
     def print_board(self, stdscr):
         try:
+            stdscr.addstr("  ")
+            for index in range(1, self.game_width + 1):
+                stdscr.addstr(f" {index}")
+            stdscr.addstr("\n")
             for i in range(self.height):
+                if i % 2 == 1:
+                    stdscr.addstr(f"{(i // 2) + 1:>2}")
+                else:
+                    stdscr.addstr("  ")
+
                 for j in range(self.width):
                     stdscr.addstr(f"{self.board[i][j]}")
                 stdscr.addstr("\n")

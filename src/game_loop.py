@@ -53,6 +53,7 @@ class Game:
                 food.position not in snake.positions
             )
             if generate_food_condition:
+                food.generate_food()
                 while food.position in snake.positions:
                     food.generate_food()
                 game_board.set_value(food.y, food.x, food.FOOD_SHAPE)
