@@ -11,8 +11,10 @@ class Snake:
         self.y = y
         self.x = x
         self.direction = Direction.DOWN
-        self.snake_length = 5  # TODO: make dynamic, not hardcoded
+        self.snake_length = 3  # TODO: make dynamic, not hardcoded
         self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length)]
+        self.score = 0
+
         self.fill_positions()
 
     def update_direction(self):
@@ -51,7 +53,8 @@ class Snake:
         )
         return out_of_bounds
 
-    def add_snake_element(self):
+    def grow(self):
         self.update_direction()
-        # Prepend to current head position
+        # TODO: insert at index 1 instead and freeze rest of tail
         self.positions.insert(0, (self.y, self.x))
+        self.score += 1

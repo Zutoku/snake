@@ -18,6 +18,8 @@ class Food:
         self.x = random.randint(1, self.game_width)
         self.position = self.y, self.x
         self.exists = True
+        self.shape = self.FOOD_SHAPE
 
-    def eat_food(self):
+    def remove_food(self):
         self.exists = False
+        self.shape = self.EMPTY

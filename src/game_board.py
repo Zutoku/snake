@@ -8,10 +8,12 @@ class GameBoard:
         self.game_height = game_height
         self.height = 2 * game_width + 1
         self.width = 2 * game_height + 1
+
         self.VERTICAL_LINE = "|"
         self.HORIZONTAL_LINE = "-"
         self.CORNERS = "+"
         self.GRID_OFFSET = 2
+
         self.board = np.full((self.height, self.width), " ", dtype=object)
         self.fill_board()
 

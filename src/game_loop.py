@@ -31,6 +31,16 @@ class Game:
                 case curses.KEY_RIGHT:
                     snake.direction = Direction.RIGHT
 
+            if food.exists and food.position == snake.positions[0]:
+                food.remove_food()
+                snake.grow()
+
+            if not food.exists:
+                food.generate_food()
+                while food.position in snake.positions:
+                    food.generate_food()
+            game_board.set_value(food.y, food.x, food.shape)
+
             for y, x in snake.positions:
                 game_board.set_value(y, x, snake.SNAKE_SHAPE)
 
@@ -40,23 +50,11 @@ class Game:
                 if len(snake.positions) != len(set(snake.positions)):
                     running = False
 
-            if time_elapsed > 1.0:
+            if time_elapsed > 0.5:
                 snake.update_direction()
                 snake.update_snake()
                 # y, x = snake.update_position()
                 start_time = time.time()
-
-            if food.exists and food.position in snake.positions:
-                food.exists = False
-
-            generate_food_condition = (not food.exists) and (
-                food.position not in snake.positions
-            )
-            if generate_food_condition:
-                food.generate_food()
-                while food.position in snake.positions:
-                    food.generate_food()
-                game_board.set_value(food.y, food.x, food.FOOD_SHAPE)
 
             stdscr.clear()
             game_board.print_board(stdscr)
@@ -64,7 +62,7 @@ class Game:
             stdscr.addstr(f"{snake.positions}\n")
             stdscr.addstr(f"{food.position}\n")
             stdscr.addstr(f"y: {food.y} x: {food.x}\n")
-            stdscr.addstr(f"{food.exists}\n")
+            stdscr.addstr(f"{snake.score}\n")
             stdscr.refresh()
             # Small delay to reduce CPU usage
             time.sleep(0.1)
