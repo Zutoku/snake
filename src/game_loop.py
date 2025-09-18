@@ -9,6 +9,7 @@ from constants import Direction
 class Game:
     def __init__(self):
         self.score: int = 0
+        self.REFRESH_TIMER = 0.5
 
     def run(self, stdscr, game_board: GameBoard, snake: Snake, food: Food):
         start_time = time.time()
@@ -34,6 +35,7 @@ class Game:
             if food.exists and food.position == snake.positions[0]:
                 food.remove_food()
                 snake.grow()
+                self.score += 1
 
             if not food.exists:
                 food.generate_food()
@@ -50,7 +52,7 @@ class Game:
                 if len(snake.positions) != len(set(snake.positions)):
                     running = False
 
-            if time_elapsed > 0.5:
+            if time_elapsed > self.REFRESH_TIMER:
                 snake.update_direction()
                 snake.update_snake()
                 # y, x = snake.update_position()
@@ -58,14 +60,7 @@ class Game:
 
             stdscr.clear()
             game_board.print_board(stdscr)
-            stdscr.addstr(f"{time_elapsed}\n")
-            stdscr.addstr(f"{snake.positions}\n")
-            stdscr.addstr(f"{food.position}\n")
-            stdscr.addstr(f"y: {food.y} x: {food.x}\n")
-            stdscr.addstr(f"{snake.score}\n")
+            stdscr.addstr(f"Current score: {self.score}\n")
             stdscr.refresh()
             # Small delay to reduce CPU usage
             time.sleep(0.1)
-
-    def update(self):
-        pass

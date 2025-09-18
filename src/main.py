@@ -53,6 +53,9 @@ def main(stdscr):
         curses.curs_set(False)
         game = Game()
         game.run(stdscr, game_board, snake, food)
+        stdscr.nodelay(0)
+        stdscr.addstr("You lost! Press ENTER to try again: ")
+        stdscr.getstr()
 
     # key = stdscr.getstr()
     # if key == ord("q"):

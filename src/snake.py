@@ -1,4 +1,3 @@
-from snake_element import SnakeElement
 from constants import Direction
 from typing import List, Tuple
 
@@ -13,7 +12,7 @@ class Snake:
         self.direction = Direction.DOWN
         self.snake_length = 3  # TODO: make dynamic, not hardcoded
         self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length)]
-        self.score = 0
+        self.growing = False
 
         self.fill_positions()
 
@@ -41,8 +40,10 @@ class Snake:
     def update_snake(self):
         self.y = max(1, min(self.y, self.board_height))
         self.x = max(1, min(self.x, self.board_width))
-        self.positions.pop()
+        if not self.growing:
+            self.positions.pop()
         self.positions.insert(0, (self.y, self.x))
+        self.growing = False
 
     def is_out_of_bounds(self):
         out_of_bounds = (
@@ -54,7 +55,4 @@ class Snake:
         return out_of_bounds
 
     def grow(self):
-        self.update_direction()
-        # TODO: insert at index 1 instead and freeze rest of tail
-        self.positions.insert(0, (self.y, self.x))
-        self.score += 1
+        self.growing = True
