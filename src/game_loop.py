@@ -7,9 +7,11 @@ from constants import Direction
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, snake_colour, food_colour):
         self.score: int = 0
         self.REFRESH_TIMER = 0.5
+        self.snake_colour = snake_colour
+        self.food_colour = food_colour
 
     def run(self, stdscr, game_board: GameBoard, snake: Snake, food: Food):
         start_time = time.time()
@@ -41,10 +43,10 @@ class Game:
                 food.generate_food()
                 while food.position in snake.positions:
                     food.generate_food()
-            game_board.set_value(food.y, food.x, food.shape)
+            game_board.set_value(food.y, food.x, food.shape, self.food_colour)
 
             for y, x in snake.positions:
-                game_board.set_value(y, x, snake.SNAKE_SHAPE)
+                game_board.set_value(y, x, snake.SNAKE_SHAPE, self.snake_colour)
 
             if hard_mode:
                 if snake.is_out_of_bounds():

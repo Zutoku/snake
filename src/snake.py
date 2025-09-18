@@ -13,7 +13,6 @@ class Snake:
         self.snake_length = 3  # TODO: make dynamic, not hardcoded
         self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length)]
         self.growing = False
-
         self.fill_positions()
 
     def update_direction(self):

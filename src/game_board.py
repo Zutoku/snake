@@ -17,20 +17,37 @@ class GameBoard:
         self.board = np.full((self.height, self.width), " ", dtype=object)
         self.fill_board()
 
+    def set_value(self, y, x, value, colour):
+        if x > 1:
+            x = (x * self.GRID_OFFSET) - 1
+        if y > 1:
+            y = (y * self.GRID_OFFSET) - 1
+        y = max(1, min(y, self.height - 1))
+        x = max(1, min(x, self.width - 1))
+        self.board[y, x] = (value, colour)  # Store as tuple
+
     def print_board(self, stdscr):
         try:
+            # Column headers
             stdscr.addstr("  ")
             for index in range(1, self.game_width + 1):
                 stdscr.addstr(f" {index}")
             stdscr.addstr("\n")
+
             for i in range(self.height):
+                # Row numbers
                 if i % 2 == 1:
                     stdscr.addstr(f"{(i // 2) + 1:>2}")
                 else:
                     stdscr.addstr("  ")
 
                 for j in range(self.width):
-                    stdscr.addstr(f"{self.board[i][j]}")
+                    cell = self.board[i][j]
+                    if isinstance(cell, tuple):
+                        char, colour = cell
+                        stdscr.addstr(char, colour)
+                    else:
+                        stdscr.addstr(str(cell))
                 stdscr.addstr("\n")
         except curses.error:
             pass
@@ -54,13 +71,3 @@ class GameBoard:
         for i in range(0, self.height, 2):
             for j in range(0, self.width, 2):
                 self.board[i][j] = self.CORNERS
-
-    def set_value(self, y, x, value):
-        if x > 1:
-            x = (x * self.GRID_OFFSET) - 1
-        if y > 1:
-            y = (y * self.GRID_OFFSET) - 1
-
-        y = max(1, min(y, self.height - 1))
-        x = max(1, min(x, self.width - 1))
-        self.board[y, x] = value

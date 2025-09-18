@@ -7,6 +7,13 @@ from game_loop import Game
 
 def main(stdscr):
     while True:
+        curses.start_color()
+        # Define color pairs (foreground, background)
+        curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+        curses.init_pair(2, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+        colour_green = curses.color_pair(1)
+        colour_yellow = curses.color_pair(2)
+
         stdscr.keypad(True)
         curses.echo()
         stdscr.nodelay(0)
@@ -51,60 +58,11 @@ def main(stdscr):
         stdscr.nodelay(1)
 
         curses.curs_set(False)
-        game = Game()
+        game = Game(colour_green, colour_yellow)
         game.run(stdscr, game_board, snake, food)
         stdscr.nodelay(0)
         stdscr.addstr("You lost! Press ENTER to try again: ")
         stdscr.getstr()
-
-    # key = stdscr.getstr()
-    # if key == ord("q"):
-    #     break
-    # x = 1
-    # y = 1
-    # # game loop starts here:
-    # start_time = time.time()
-    # running = True
-    # hard_mode = False
-    # while running:
-    #     time_elapsed = time.time() - start_time
-    #     key = stdscr.getch()
-    #     game_board.fill_board()
-    #
-    #     match key:
-    #         case 113:  # ASCII code for letter q
-    #             running = False
-    #         case curses.KEY_UP:
-    #             snake.direction = Direction.UP
-    #         case curses.KEY_DOWN:
-    #             snake.direction = Direction.DOWN
-    #         case curses.KEY_LEFT:
-    #             snake.direction = Direction.LEFT
-    #         case curses.KEY_RIGHT:
-    #             snake.direction = Direction.RIGHT
-    #
-    #     # if 0 < x < game_board.width and 0 < y < game_board.height:
-    #     for y, x in snake.positions:
-    #         game_board.set_value(y, x, snake.SNAKE_SHAPE)
-    #         # game_board.board[(position)] = snake.SNAKE_SHAPE
-    #
-    #     if time_elapsed > 1.0:
-    #         snake.update_direction()
-    #         snake.update_snake()
-    #
-    #         if snake.is_out_of_bounds() and hard_mode:
-    #             running = False
-    #
-    #         # y, x = snake.update_position()
-    #         start_time = time.time()
-    #
-    #     stdscr.clear()
-    #     game_board.print_board(stdscr)
-    #     stdscr.addstr(f"{time_elapsed}\n")
-    #     stdscr.addstr(f"{snake.positions}\n")
-    #     stdscr.refresh()
-    #     # Small delay to reduce CPU usage
-    #     time.sleep(0.1)
 
 
 if __name__ == "__main__":
