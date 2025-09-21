@@ -31,10 +31,11 @@ class Snake:
         for i in range(1, self.snake_length):
             self.positions[i] = (1, i + 1)
 
-    def update_position(self):
-        self.y = max(1, min(self.y, self.board_height))
-        self.x = max(1, min(self.x, self.board_width))
-        return self.y, self.x
+    # Deprecated:
+    # def update_position(self):
+    #     self.y = max(1, min(self.y, self.board_height))
+    #     self.x = max(1, min(self.x, self.board_width))
+    #     return self.y, self.x
 
     def update_snake(self):
         self.y = max(1, min(self.y, self.board_height))
