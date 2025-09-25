@@ -8,8 +8,9 @@ from constants import Direction
 
 class Game:
     def __init__(self, snake_colour, food_colour):
-        self.score: int = 0
         self.REFRESH_TIMER = 0.5
+
+        self.score: int = 0
         self.snake_colour = snake_colour
         self.food_colour = food_colour
 
@@ -21,7 +22,7 @@ class Game:
             time_elapsed = time.time() - start_time
             key = stdscr.getch()
             game_board.fill_board()
-
+            # Input handling ---------------------------------------
             match key:
                 case 113:  # ASCII code for letter q
                     running = False
@@ -33,7 +34,9 @@ class Game:
                     snake.direction = Direction.LEFT
                 case curses.KEY_RIGHT:
                     snake.direction = Direction.RIGHT
+            # ------------------------------------------------------
 
+            # Food handling ----------------------------------------
             if food.exists and food.position == snake.positions[0]:
                 food.remove_food()
                 snake.grow()
@@ -44,7 +47,9 @@ class Game:
                 while food.position in snake.positions:
                     food.generate_food()
             game_board.set_value(food.y, food.x, food.shape, self.food_colour)
+            # --------------------------------------------------------
 
+            # Snake handling -----------------------------------------
             for y, x in snake.positions:
                 game_board.set_value(y, x, snake.SNAKE_SHAPE, self.snake_colour)
 
@@ -59,6 +64,7 @@ class Game:
                 snake.update_snake()
                 # y, x = snake.update_position()
                 start_time = time.time()
+            # --------------------------------------------------------
 
             stdscr.clear()
             game_board.print_board(stdscr)
