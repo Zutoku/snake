@@ -62,7 +62,6 @@ class Game:
             if time_elapsed > self.REFRESH_TIMER:
                 snake.update_direction()
                 snake.update_snake()
-                # y, x = snake.update_position()
                 start_time = time.time()
             # --------------------------------------------------------
 
