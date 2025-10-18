@@ -4,15 +4,16 @@ from typing import List, Tuple
 
 class Snake:
     def __init__(self, y, x, board_height: int, board_width: int) -> None:
+        pass
+
+
+class SnakeBody:
+    def __init__(self, y, x, board_height: int, board_width: int) -> None:
         self.board_height = board_height
         self.board_width = board_width
         self.y = y
         self.x = x
-        self.direction = Direction.DOWN
 
-
-class SnakeBody:
-    def __init__(self) -> None:
         self.SNAKE_SHAPE = "#"
         self.snake_length: int = 3  # TODO: make dynamic, not hardcoded
         self.positions: List[Tuple] = [(0, 0) for _ in range(self.snake_length)]
@@ -38,6 +39,9 @@ class SnakeBody:
 
 
 class SnakeMovement:
+    def __init__(self) -> None:
+        self.direction = Direction.DOWN
+
     def update_direction(self) -> None:
         match self.direction:
             case Direction.UP:
@@ -51,6 +55,12 @@ class SnakeMovement:
 
 
 class SnakeCollision:
+    def __init__(self, y, x, board_height: int, board_width: int) -> None:
+        self.board_height = board_height
+        self.board_width = board_width
+        self.y = y
+        self.x = x
+
     def is_out_of_bounds(self) -> bool:
         out_of_bounds = (
             self.x <= 0

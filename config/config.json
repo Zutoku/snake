@@ -1,0 +1,14 @@
+{
+  "rendering": {
+    "snake_shape": "#",
+    "food_shape": "•",
+    "colors": {
+      "snake_colour": "green",
+      "food_colour": "yellow"
+    }
+  },
+  "game_settings": {
+    "refresh_timer": 0.5,
+    "bounds_checking": true
+  }
+}

@@ -25,9 +25,9 @@ This document outlines structural improvements and refactoring suggestions for t
 **TODO:**
 
 - [x] Split Snake into multiple specialized classes:
-  - [ ] Create `SnakeBody` class - manages list of positions and growth
+  - [x] Create `SnakeBody` class - manages list of positions and growth
   - [x] Create `SnakeMovement` class - handles direction changes and movement calculations
-  - [ ] Create `SnakeCollision` class - handles collision detection (walls, self-collision)
+  - [x] Create `SnakeCollision` class - handles collision detection (walls, self-collision)
   - [ ] Refactor `Snake` to be a coordinator that uses these components
   - [x] Remove unused `update_position()` method
   - [ ] Consolidate position update logic
